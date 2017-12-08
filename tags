@@ -1,0 +1,88 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ASTLeaf	ischeme/parser/node.py	/^class ASTLeaf(ASTree):$/;"	c
+ASTList	ischeme/parser/node.py	/^class ASTList(ASTree):$/;"	c
+ASTree	ischeme/parser/node.py	/^class ASTree(object):$/;"	c
+BoolToken	ischeme/lexer/token.py	/^class BoolToken(Token):$/;"	c
+CharToken	ischeme/lexer/token.py	/^class CharToken(Token):$/;"	c
+DottedPairToken	ischeme/lexer/token.py	/^class DottedPairToken(Token):$/;"	c
+ExprNode	ischeme/parser/node.py	/^class ExprNode(ASTList):$/;"	c
+FloatToken	ischeme/lexer/token.py	/^class FloatToken(Token):$/;"	c
+IdentifierToken	ischeme/lexer/token.py	/^class IdentifierToken(Token):$/;"	c
+IntToken	ischeme/lexer/token.py	/^class IntToken(Token):$/;"	c
+LeftBraceToken	ischeme/lexer/token.py	/^class LeftBraceToken(Token):$/;"	c
+Lexer	ischeme/lexer/core.py	/^class Lexer(object):$/;"	c
+Parser	ischeme/parser/core.py	/^class Parser(object):$/;"	c
+PrimaryNode	ischeme/parser/node.py	/^class PrimaryNode(ASTLeaf):$/;"	c
+ProgramNode	ischeme/parser/node.py	/^class ProgramNode(ASTList):$/;"	c
+RightBraceToken	ischeme/lexer/token.py	/^class RightBraceToken(Token):$/;"	c
+SingleCommentToken	ischeme/lexer/token.py	/^class SingleCommentToken(Token):$/;"	c
+StringToken	ischeme/lexer/token.py	/^class StringToken(Token):$/;"	c
+SymbolToken	ischeme/lexer/token.py	/^class SymbolToken(Token):$/;"	c
+Token	ischeme/lexer/token.py	/^class Token(object):$/;"	c
+__init__	ischeme/lexer/core.py	/^    def __init__(self, lines):$/;"	m	class:Lexer
+__init__	ischeme/lexer/token.py	/^    def __init__(self, linenu, colnu, value):$/;"	m	class:BoolToken
+__init__	ischeme/lexer/token.py	/^    def __init__(self, linenu, colnu, value):$/;"	m	class:CharToken
+__init__	ischeme/lexer/token.py	/^    def __init__(self, linenu, colnu, value):$/;"	m	class:DottedPairToken
+__init__	ischeme/lexer/token.py	/^    def __init__(self, linenu, colnu, value):$/;"	m	class:FloatToken
+__init__	ischeme/lexer/token.py	/^    def __init__(self, linenu, colnu, value):$/;"	m	class:IdentifierToken
+__init__	ischeme/lexer/token.py	/^    def __init__(self, linenu, colnu, value):$/;"	m	class:IntToken
+__init__	ischeme/lexer/token.py	/^    def __init__(self, linenu, colnu, value):$/;"	m	class:LeftBraceToken
+__init__	ischeme/lexer/token.py	/^    def __init__(self, linenu, colnu, value):$/;"	m	class:RightBraceToken
+__init__	ischeme/lexer/token.py	/^    def __init__(self, linenu, colnu, value):$/;"	m	class:SingleCommentToken
+__init__	ischeme/lexer/token.py	/^    def __init__(self, linenu, colnu, value):$/;"	m	class:StringToken
+__init__	ischeme/lexer/token.py	/^    def __init__(self, linenu, colnu, value):$/;"	m	class:SymbolToken
+__init__	ischeme/lexer/token.py	/^    def __init__(self, linenu, colnu, value):$/;"	m	class:Token
+__init__	ischeme/parser/core.py	/^    def __init__(self, lexer):$/;"	m	class:Parser
+__init__	ischeme/parser/node.py	/^    def __init__(self):$/;"	m	class:ASTree
+__init__	ischeme/parser/node.py	/^    def __init__(self, children):$/;"	m	class:ASTList
+__init__	ischeme/parser/node.py	/^    def __init__(self, children):$/;"	m	class:ExprNode
+__init__	ischeme/parser/node.py	/^    def __init__(self, children):$/;"	m	class:ProgramNode
+__init__	ischeme/parser/node.py	/^    def __init__(self, token):$/;"	m	class:ASTLeaf
+__init__	ischeme/parser/node.py	/^    def __init__(self, token):$/;"	m	class:PrimaryNode
+analyer	ischeme/parser/node.py	/^    def analyer(self):$/;"	m	class:ProgramNode
+colnu	ischeme/lexer/token.py	/^    def colnu(self):$/;"	m	class:Token
+expr	ischeme/parser/core.py	/^    def expr(self, lexer):$/;"	m	class:Parser
+fill_queue	ischeme/lexer/core.py	/^    def fill_queue(self, idx):$/;"	m	class:Lexer
+get_child	ischeme/parser/node.py	/^    def get_child(self, index):$/;"	m	class:ASTree
+has_more	ischeme/lexer/core.py	/^    def has_more(self):$/;"	m	class:Lexer
+l	ischeme/lexer/core.py	/^    l = Lexer(src)$/;"	v	class:Lexer
+lexer	main.py	/^    lexer = ischeme.lexer.core.Lexer(["(+ 1 2)","(+ 1 2)"])$/;"	v
+linenu	ischeme/lexer/token.py	/^    def linenu(self):$/;"	m	class:Token
+match	ischeme/lexer/token.py	/^    def match(cls, linenu, pos, line):$/;"	m	class:BoolToken
+match	ischeme/lexer/token.py	/^    def match(cls, linenu, pos, line):$/;"	m	class:CharToken
+match	ischeme/lexer/token.py	/^    def match(cls, linenu, pos, line):$/;"	m	class:DottedPairToken
+match	ischeme/lexer/token.py	/^    def match(cls, linenu, pos, line):$/;"	m	class:FloatToken
+match	ischeme/lexer/token.py	/^    def match(cls, linenu, pos, line):$/;"	m	class:IdentifierToken
+match	ischeme/lexer/token.py	/^    def match(cls, linenu, pos, line):$/;"	m	class:IntToken
+match	ischeme/lexer/token.py	/^    def match(cls, linenu, pos, line):$/;"	m	class:LeftBraceToken
+match	ischeme/lexer/token.py	/^    def match(cls, linenu, pos, line):$/;"	m	class:RightBraceToken
+match	ischeme/lexer/token.py	/^    def match(cls, linenu, pos, line):$/;"	m	class:SingleCommentToken
+match	ischeme/lexer/token.py	/^    def match(cls, linenu, pos, line):$/;"	m	class:StringToken
+match	ischeme/lexer/token.py	/^    def match(cls, linenu, pos, line):$/;"	m	class:SymbolToken
+parse	ischeme/parser/core.py	/^    def parse(self, lexer):$/;"	m	class:Parser
+pattern	ischeme/lexer/token.py	/^    pattern = re.compile(r"\\s*'([a-zA-Z~!?@#$%^&*-+=_.\/\\<>][a-zA-Z~!?@#$%^&*-+=_.\/\\<>0-9]*)(?:\\s+|\\))")$/;"	v	class:SymbolToken
+pattern	ischeme/lexer/token.py	/^    pattern = re.compile(r"\\s*( . )\\S+")$/;"	v	class:DottedPairToken
+pattern	ischeme/lexer/token.py	/^    pattern = re.compile(r"\\s*(#[tf])\\b")$/;"	v	class:BoolToken
+pattern	ischeme/lexer/token.py	/^    pattern = re.compile(r"\\s*(#\\\\.+?)\\b")$/;"	v	class:CharToken
+pattern	ischeme/lexer/token.py	/^    pattern = re.compile(r"\\s*([+-]?[1-9][0-9]*)\\b")$/;"	v	class:IntToken
+pattern	ischeme/lexer/token.py	/^    pattern = re.compile(r"\\s*([+-]?[1-9][0-9]*\\.[0-9]*)")$/;"	v	class:FloatToken
+pattern	ischeme/lexer/token.py	/^    pattern = re.compile(r"\\s*([a-zA-Z~!?@#$%^&*-+=_.\/\\<>][a-zA-Z~!?@#$%^&*-+=_.\/\\<>0-9]*)(?:\\s+|\\))")$/;"	v	class:IdentifierToken
+pattern	ischeme/lexer/token.py	/^    pattern = re.compile(r"\\s*(\\()")$/;"	v	class:LeftBraceToken
+pattern	ischeme/lexer/token.py	/^    pattern = re.compile(r"\\s*(\\))")$/;"	v	class:RightBraceToken
+pattern	ischeme/lexer/token.py	/^    pattern = re.compile(r"\\s*;(.*)")$/;"	v	class:SingleCommentToken
+pattern	ischeme/lexer/token.py	/^    pattern = re.compile(r'\\s*"((?:\\"|\\n|\\\\|[^"])*)"')$/;"	v	class:StringToken
+peek	ischeme/lexer/core.py	/^    def peek(self, index=0):$/;"	m	class:Lexer
+primary	ischeme/parser/core.py	/^    def primary(self, lexer):$/;"	m	class:Parser
+program	ischeme/parser/core.py	/^    def program(self, lexer):$/;"	m	class:Parser
+raise_syxtaxerror	ischeme/parser/core.py	/^    def raise_syxtaxerror(self, token):$/;"	m	class:Parser
+read	ischeme/lexer/core.py	/^    def read(self):$/;"	m	class:Lexer
+readline	ischeme/lexer/core.py	/^    def readline(self):$/;"	m	class:Lexer
+src	ischeme/lexer/core.py	/^    src = ['( if (is Exception e) (1.))']$/;"	v	class:Lexer
+strip_comment	ischeme/parser/core.py	/^    def strip_comment(self, lexer):$/;"	m	class:Parser
+token_types	ischeme/lexer/core.py	/^    token_types = [FloatToken, IntToken, BoolToken, CharToken, StringToken, SymbolToken, IdentifierToken, LeftBraceToken, RightBraceToken, DottedPairToken, SingleCommentToken]$/;"	v	class:Lexer
+value	ischeme/lexer/token.py	/^    def value(self):$/;"	m	class:Token

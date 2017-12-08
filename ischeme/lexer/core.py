@@ -3,7 +3,7 @@
 from token import *
 
 class Lexer(object):
-    token_types = [FloatToken, IntToken, BoolToken, CharToken, StringToken, SymbolToken, IdentityToken, LeftBraceToken, RightBraceToken, DottedPairToken, SingleCommentToken]
+    token_types = [FloatToken, IntToken, BoolToken, CharToken, StringToken, SymbolToken, IdentifierToken, LeftBraceToken, RightBraceToken, DottedPairToken, SingleCommentToken]
 
     def __init__(self, lines):
         super(Lexer, self).__init__()
@@ -46,11 +46,3 @@ class Lexer(object):
             if found is None:
                 pos += 1
         self.index += 1
-
-if __name__ == '__main__':
-    src = ['( if (is Exception e) (1.))']
-    l = Lexer(src)
-    l.peek()
-    for q in l.queue:
-        print q
-        print q.value

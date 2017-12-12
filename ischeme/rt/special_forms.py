@@ -2,6 +2,18 @@
 # -*- coding: utf-8 -*-
 from ..lexer.token import *
 from ..parser.node import *
+from ..lexer.core import Lexer
+from ..parser.core import Parser
+import core
+
+def sf_load(rt, expr):
+    with open(rt.eval(expr)) as f:
+        src = [line.strip("\n") for line in f.readlines()]
+    lexer = Lexer(src)
+    parser = Parser(lexer)
+    _rt = core.RT()
+    _rt.eval(parser.parse())
+    rt.locals.insert(0, _rt.globals)
 
 def sf_if(rt, cond, true_expr, false_expr=None):
     if rt.eval(cond):
@@ -32,6 +44,9 @@ def sf_and(rt, expr, *exprs):
 
     return ret
 
+def sf_not(rt, expr):
+    return not rt.eval(expr)
+
 def sf_define(rt, l_val, r_val):
     if isinstance(l_val, PrimaryNode) and isinstance(l_val.token, IdentifierToken):
         rt.globals[l_val.token.value] = rt.eval(r_val)
@@ -52,10 +67,12 @@ def sf_let(rt, local_vars, expr, *exprs):
             else:
                 raise SyntaxError("special form 'let'")
         rt.locals.append(kvs)
-        rt.eval(expr)
+        ret = None
+        ret = rt.eval(expr)
         for expr in exprs:
-            rt.eval(expr)
+            ret = rt.eval(expr)
         rt.locals.pop(-1)
+        return ret
     else:
         raise SyntaxError("special form 'let'")
 

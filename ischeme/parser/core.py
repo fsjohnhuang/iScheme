@@ -51,6 +51,7 @@ class Parser(object):
         self.strip_comment()
         while self.lexer.peek():
             nodes.append(self.expr())
+            self.strip_comment()
 
         return ProgramNode(nodes)
 

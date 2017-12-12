@@ -4,6 +4,8 @@
 def display(fmt, *exprs):
     if len(exprs):
         print(fmt.format(*exprs))
+    elif isinstance(fmt, bool):
+        print("#t" if fmt else "#f")
     else:
         print(fmt)
 
@@ -46,9 +48,14 @@ def div(a, *ops):
 def pow(a, n):
     return a ** n
 
-def sqrt(a):
-    return a * a
+def mod(a, m):
+    return a % m
 
+def gt(a, b):
+    return a > b
+
+def lt(a, b):
+    return a < b
 
 exports = {"display": display,
            "str": expr_str,
@@ -56,5 +63,7 @@ exports = {"display": display,
            "-": minus,
            "*": mul,
            "/": div,
+           "%": mod,
            "**": pow,
-           "sqrt": sqrt}
+           "<": lt,
+           ">": gt}

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from ..parser.node import *
 from ..lexer.token import *
-import special_forms, libs
+import special_forms, nlib
 
 class RT(object):
     def __init__(self):
@@ -15,11 +15,9 @@ class RT(object):
             self.special_forms[kvs[0]] = kvs[1]
 
         self.globals = {}
-        for name in dir(libs):
-            if name.endswith("_exports"):
-                exports = getattr(libs, name)
-                for kv in exports.items():
-                    self.globals[kv[0]] = kv[1]
+        exports = nlib.exports
+        for kv in exports.items():
+            self.globals[kv[0]] = kv[1]
 
         self.locals = []
 
@@ -75,6 +73,8 @@ class RT(object):
             return token.value
         elif type_of_token == IdentifierToken:
             return self.resolve(token)
+        elif type_of_token == SymbolToken:
+            return token.value.replace("'","")
 
     def eval_lambda(self, node, args):
         lexical_scope = node.lexical_scope

@@ -7,6 +7,10 @@ def display(fmt, *exprs):
     else:
         print(fmt)
 
+def expr_str(*xs):
+    ret = [str(x) for x in xs]
+    return "".join(ret)
+
 def add(*ops):
     """
     (+)    ;=> 0
@@ -47,6 +51,7 @@ def sqrt(a):
 
 
 exports = {"display": display,
+           "str": expr_str,
            "+": add,
            "-": minus,
            "*": mul,

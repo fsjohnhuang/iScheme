@@ -30,3 +30,9 @@ class ExprNode(ASTList):
 class ProgramNode(ASTList):
     def __init__(self, children):
         super(ProgramNode, self).__init__(children)
+
+class LambdaNode(ASTLeaf):
+    def __init__(self, lexical_scope, param_list, token):
+        super(LambdaNode, self).__init__(token)
+        self.param_list = param_list
+        self.lexical_scope = lexical_scope

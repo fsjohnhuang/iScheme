@@ -35,3 +35,74 @@ def sf_and(rt, expr, *exprs):
 def sf_define(rt, l_val, r_val):
     if isinstance(l_val, PrimaryNode) and isinstance(l_val.token, IdentifierToken):
         rt.globals[l_val.token.value] = rt.eval(r_val)
+    else:
+        raise SyntaxError("There is invalid identity name after define special form.")
+
+def sf_let(rt, local_vars, expr, *exprs):
+    kvs = {}
+    if isinstance(local_vars, ExprNode):
+        for child in local_vars.children:
+            if isinstance(child, ExprNode) and len(child.children) == 2:
+                l_val = child.children[0]
+                r_val = child.children[1]
+                if isinstance(l_val, PrimaryNode):
+                    kvs[l_val.token.value] = rt.eval(r_val)
+                else:
+                    raise SyntaxError("special form 'let'")
+            else:
+                raise SyntaxError("special form 'let'")
+        rt.locals.append(kvs)
+        rt.eval(expr)
+        for expr in exprs:
+            rt.eval(expr)
+        rt.locals.pop(-1)
+    else:
+        raise SyntaxError("special form 'let'")
+
+def sf_let_asterisk(rt, local_vars, expr, *exprs):
+    kvs = {}
+    rt.locals.append(kvs)
+    try:
+        if isinstance(local_vars, ExprNode):
+            for child in local_vars.children:
+                if isinstance(child, ExprNode) and len(child.children) == 2:
+                    l_val = child.children[0]
+                    r_val = child.children[1]
+                    if isinstance(l_val, PrimaryNode):
+                        kvs[l_val.token.value] = rt.eval(r_val)
+                    else:
+                        raise SyntaxError("special form 'let'")
+                else:
+                    raise SyntaxError("special form 'let'")
+            rt.eval(expr)
+            for expr in exprs:
+                rt.eval(expr)
+        else:
+            raise SyntaxError("special form 'let'")
+    finally:
+        rt.locals.pop(-1)
+
+def sf_lambda(rt, param_list, expr):
+    params = map(lambda child: child.token.value, param_list.children)
+    id_nodes = __find_refs(expr, params)
+    kvs = {}
+    for id_node in id_nodes:
+        try:
+            kvs[id_node.token.value] = rt.eval(id_node)
+        except Exception, e:
+            pass
+
+    return LambdaNode(kvs, param_list, expr)
+
+def __find_refs(expr, excludes):
+    if isinstance(expr, ExprNode):
+        refs = []
+        for child in expr.children[1:]:
+            refs += __find_refs(child, excludes)
+        return refs
+    elif isinstance(expr, PrimaryNode) and isinstance(expr.token, IdentifierToken) and expr.token.value not in excludes:
+        return [expr]
+    else:
+        return []
+
+alias = {"let*": sf_let_asterisk}

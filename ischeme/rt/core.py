@@ -11,6 +11,8 @@ class RT(object):
         for name in dir(special_forms):
             if name.startswith("sf_"):
                 self.special_forms["_".join(name.split("_")[1:])] = getattr(special_forms, name)
+        for kvs in special_forms.alias.items():
+            self.special_forms[kvs[0]] = kvs[1]
 
         self.globals = {}
         for name in dir(libs):
@@ -19,6 +21,19 @@ class RT(object):
                 for kv in exports.items():
                     self.globals[kv[0]] = kv[1]
 
+        self.locals = []
+
+    def resolve(self, node):
+        token = node
+        try:
+            idx = range(len(self.locals))
+            idx.reverse()
+            for i in idx:
+                if self.locals[i].has_key(token.value):
+                    return self.locals[i][token.value]
+            return self.globals[token.value]
+        except Exception:
+            raise Exception("identity {0} @{1}:{2} is not defined".format(token.value, token.linenu, token.colnu))
 
     def eval(self, node):
         type_of_node = type(node)
@@ -38,8 +53,10 @@ class RT(object):
         args = node.children[1:]
         special_form = self.special_forms.get(identifier.value, None)
         if special_form is None:
-            expr = self.globals.get(identifier.value, None)
-            if expr is not None:
+            expr = self.resolve(identifier)
+            if isinstance(expr, LambdaNode):
+                return self.eval_lambda(expr, [self.eval(arg) for arg in args])
+            elif expr is not None:
                 return expr(*[self.eval(arg) for arg in args])
         else:
             args = [self] + args
@@ -57,8 +74,15 @@ class RT(object):
         elif type_of_token == StringToken:
             return token.value
         elif type_of_token == IdentifierToken:
-            try:
-                return self.globals[token.value]
-            except Exception:
-                raise Exception("identity {0} @{1}:{2} is not defined".format(token.value, token.linenu, token.colnu))
+            return self.resolve(token)
 
+    def eval_lambda(self, node, args):
+        lexical_scope = node.lexical_scope
+        param_list = node.param_list
+        for child in param_list.children:
+            lexical_scope[child.token.value] = args.pop(0)
+        self.locals.append(lexical_scope)
+        ret = self.eval(node.token)
+        self.locals.pop(-1)
+
+        return ret

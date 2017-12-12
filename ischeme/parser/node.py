@@ -28,9 +28,5 @@ class ExprNode(ASTList):
         super(ExprNode, self).__init__(children)
 
 class ProgramNode(ASTList):
-    def analyer(self):
-        """docstring for match"""
-        
-
     def __init__(self, children):
-        super(ExprNode, self).__init__(children)
+        super(ProgramNode, self).__init__(children)

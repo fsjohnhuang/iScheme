@@ -22,7 +22,7 @@ class Token(object):
         return self.__value
 
 class IntToken(Token):
-    pattern = re.compile(r"\s*([+-]?[1-9][0-9]*)(?:\s+|\))")
+    pattern = re.compile(r"\s*([+-]?(?:[1-9][0-9]*|[0-9]))(?:\s+|\)|$)")
 
     @classmethod
     def match(cls, linenu, pos, line):
@@ -34,7 +34,7 @@ class IntToken(Token):
         super(IntToken, self).__init__(linenu, colnu, value)
 
 class FloatToken(Token):
-    pattern = re.compile(r"\s*([+-]?[1-9][0-9]*\.[0-9]*)")
+    pattern = re.compile(r"\s*([+-]?[1-9][0-9]*\.[0-9]*)(?:\s+|\)|$)")
 
     @classmethod
     def match(cls, linenu, pos, line):
@@ -83,7 +83,7 @@ class StringToken(Token):
         super(StringToken, self).__init__(linenu, colnu, value)
 
 class SymbolToken(Token):
-    pattern = re.compile(r"\s*'([a-zA-Z~!?@#$%^&*\-+=_./\<>][a-zA-Z~!?@#$%^&*\-+=_./\<>0-9]*)(?:\s+|\))")
+    pattern = re.compile(r"\s*'([a-zA-Z~!?@#$%^&*\-+=_./\<>][a-zA-Z~!?@#$%^&*\-+=_./\<>0-9]*)(?:\s+|\)|$)")
 
     @classmethod
     def match(cls, linenu, pos, line):
@@ -95,7 +95,7 @@ class SymbolToken(Token):
         super(SymbolToken, self).__init__(linenu, colnu, value)
 
 class IdentifierToken(Token):
-    pattern = re.compile(r"\s*([a-zA-Z~!?@#$%^&*\-+=_./\<>][a-zA-Z~!?@#$%^&*\-+=_./\<>0-9]*)(?:\s+|\))")
+    pattern = re.compile(r"\s*([a-zA-Z~!?@#$%^&*\-+=_./\<>][a-zA-Z~!?@#$%^&*\-+=_./\<>0-9]*)(?:\s+|\)|$)")
 
     @classmethod
     def match(cls, linenu, pos, line):

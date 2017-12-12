@@ -1,10 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import ischeme.lexer.core, ischeme.parser.core
+from ischeme.lexer.core import Lexer
+from ischeme.parser.core import Parser
+from ischeme.rt.core import RT
 
 if __name__ == '__main__':
-    lexer = ischeme.lexer.core.Lexer(["(* 2 (- 1 3)"])
+    src = []
+    with open("./scm_src/test1.scm") as f:
+        src = [line.strip("\n") for line in f.readlines()]
+
+    lexer = Lexer(src)
     #lexer.peek(20)
-    parser = ischeme.parser.core.Parser(lexer)
+    #print(lexer.queue)
+    parser = Parser(lexer)
     ast = parser.parse()
-    print(ast[0].children)
+    #print(ast.children[0].children[-1].children[1].token.value)
+    RT().eval(ast)

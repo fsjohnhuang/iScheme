@@ -1,16 +1,14 @@
-#!/usr/bin/env python
+#!tusr/bin/env python
 # -*- coding: utf-8 -*-
 from ..lexer.token import *
 from node import *
 
-# 解释器组合子类型的库
 # 将(E)BNF写成的规则转换为语法分析程序
 
 # EBNF
-# primary : "(" expr ")" | INT | FLOAT | STRING | BOOL | CHAR | SYMBOL | IDENTIFIER
-# expr    : IDENTIFIER { primary }
-# program : { primary }
-
+# primary : INT | FLOAT | STRING | BOOL | CHAR | SYMBOL | IDENTIFIER | expr
+# expr    : "(" { primary } ")"
+# program : { expr }
 
 class Parser(object):
 
@@ -18,55 +16,43 @@ class Parser(object):
         super(Parser, self).__init__()
         self.lexer = lexer
 
-    def raise_syxtaxerror(self, token):
-        raise SyntaxError("line:{0}, col:{1}, {2} is error".format(token.linenu, token.colnu, token.value))
-
     def strip_comment(self):
         while isinstance(self.lexer.peek(), SingleCommentToken):
             self.lexer.read()
+
+    def primary(self):
+        self.strip_comment()
+
+        token = self.lexer.peek()
+        type_of_token = type(token)
+        if type_of_token in [IntToken,FloatToken,StringToken,BoolToken,CharToken,SymbolToken,IdentifierToken]:
+            return PrimaryNode(self.lexer.read())
+        elif type_of_token == LeftBraceToken:
+            return self.expr()
+        else:
+            raise SyntaxError("line:{0}, col:{1}, {2} is error".format(token.linenu, token.colnu, token.value))
 
     def expr(self):
         self.strip_comment()
 
         token = self.lexer.read()
-        print(token)
-        print(token.value)
-        if not isinstance(token, IdentifierToken):
-            self.raise_syxtaxerror(token)
-        else:
-            identifier = token
-            token = self.lexer.peek()
-            nodes = []
-            while token is not None and token.value != ")":
-                nodes.append(self.primary())
-                token = self.lexer.peek()
-
+        if isinstance(token, LeftBraceToken):
+            children = []
+            while not isinstance(self.lexer.peek(), RightBraceToken):
+                children.append(self.primary())
             self.lexer.read()
-
-            return ExprNode([PrimaryNode(identifier)] + nodes)
-
-    def primary(self):
-        self.strip_comment()
-
-        token = self.lexer.read()
-        print(token)
-        print(token.value)
-        type_of_token = type(token)
-        if type_of_token in [IntToken,FloatToken,StringToken,BoolToken,CharToken,SymbolToken,IdentifierToken]:
-            return PrimaryNode(token)
-        elif type_of_token == LeftBraceToken:
-            return self.expr()
+            return ExprNode(children)
         else:
-            raise SyntaxError("None")
+            raise SyntaxError("line:{0}, col:{1}, {2} is error".format(token.linenu, token.colnu, token.value))
 
     def program(self):
         nodes = []
 
         self.strip_comment()
         while self.lexer.peek():
-            nodes.append(self.primary())
+            nodes.append(self.expr())
 
-        return nodes
+        return ProgramNode(nodes)
 
     def parse(self):
         return self.program()

@@ -12,7 +12,6 @@ def main(file_path):
     src.insert(0, "(load \"/home/john/iScheme/ischeme/rt/scm/core.scm\")")
 
     lexer = Lexer(src)
-    lexer.peek(100)
     parser = Parser(lexer)
     RT().eval(parser.parse())
 

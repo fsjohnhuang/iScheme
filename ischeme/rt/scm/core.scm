@@ -1,40 +1,72 @@
-(define = (lambda (a b) (let ((r (- a b)))
-                          (and (not (< r 0))
-                               (not (> r 0))))))
-(define <= (lambda (a b) (not (> (- a b) 0))))
-(define >= (lambda (a b) (not (< (- a b) 0))))
-(define zero? (lambda (x) (= 0 x)))
-(define positive? (lambda (x) (> x 0)))
-(define negative? (lambda (x) (< x 0)))
-(define odd? (lambda (x) (= 1 (% x 2))))
-(define even? (lambda (x) (not (odd? x))))
-(define sqrt (lambda (x) (* x x)))
-(define ++ (lambda (x) (+ 1 x)))
-(define -- (lambda (x) (- x 1)))
-(define abs (lambda (x) (if (> 0 x) (* x -1) x)))
-(define max (lambda (a b) (if (> a b) a b)))
-(define min (lambda (a b) (if (> a b) b a)))
-(define count (lambda (xs)
-                (if (not (eq? (list) xs))
-                  (+ 1 (count (cdr xs)))
-                  0)))
-(define reduce (lambda (f accu xs)
-                 (begin
-                   (if (> (count xs) 0)
-                     (reduce f (f accu (car xs)) (cdr xs))
-                     accu))))
-(define map (lambda (f xs)
-              (if (> (count xs) 0)
-                (cons (f (car xs)) (map f (cdr xs)))
-                (list))))
-(define filter (lambda (f xs)
-              (if (> (count xs) 0)
-                (let ((a (car xs)))
-                  (if (f a)
-                    (cons a (filter f (cdr xs)))
-                    (filter f (cdr xs))))
-                (list))))
-(define tap (lambda (a)
-              (begin
-                (display a)
-                a)))
+(define (= a b)
+  (let ((r (- a b)))
+    (and (not (< r 0))
+         (not (> r 0)))))
+
+(define (<= a b)
+  (not (> (- a b) 0)))
+
+(define (>= a b)
+  (not (< (- a b) 0)))
+
+(define (zero? x)
+  (= 0 x))
+
+(define (positive? x)
+  (< 0 x))
+
+(define (negative? x)
+  (> 0 x))
+
+(define (odd? x)
+  (= 1 (% x 2)))
+
+(define (even? x)
+  (not (odd? x)))
+
+(define (sqrt x)
+  (* x x))
+
+(define (++ x)
+  (+ 1 x))
+
+(define (-- x)
+  (- x 1))
+
+(define (abs x)
+  (if (> 0 x)
+    (* x -1)
+    x))
+
+(define (max a b)
+  (if (> a b) a b))
+
+(define (min a b)
+  (if (> a b) b a))
+
+(define (count xs)
+  (if (eq? (list) xs)
+    0
+    (+ 1 (count (cdr xs)))))
+
+(define (reduce f accu xs)
+  (if (eq? (list) xs)
+    accu
+    (reduce f (f accu (car xs)) (cdr xs))))
+
+(define (map f xs)
+  (if (eq? (list) xs)
+    (list)
+    (cons (f (car xs)) (map f (cdr xs)))))
+
+(define (filter f xs)
+  (if (eq? (list) xs)
+    (list)
+    (let ((a (car xs)))
+      (if (f a)
+        (cons a (filter f (cdr xs)))
+        (filter f (cdr xs))))))
+
+(define (tap a)
+  (display a)
+  a)

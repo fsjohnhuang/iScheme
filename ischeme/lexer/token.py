@@ -71,7 +71,7 @@ class CharToken(Token):
         super(CharToken, self).__init__(linenu, colnu, value)
 
 class StringToken(Token):
-    pattern = re.compile(r'\s*"((?:\"|\n|\\|[^"])*)"')
+    pattern = re.compile(r'\s*"((?:\\"|\n|\\|[^"])*)"')
 
     @classmethod
     def match(cls, linenu, pos, line):

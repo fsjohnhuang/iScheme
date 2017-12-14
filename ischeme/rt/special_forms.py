@@ -47,8 +47,15 @@ def sf_and(rt, expr, *exprs):
 def sf_not(rt, expr):
     return not rt.eval(expr)
 
-def sf_define(rt, l_val, r_val):
-    if isinstance(l_val, PrimaryNode) and isinstance(l_val.token, IdentifierToken):
+def sf_define(rt, l_val, r_val, *exprs):
+    if isinstance(l_val, ExprNode):
+        identifier = l_val.children[0]
+
+        param_list = ExprNode(l_val.children[1:])
+        body = ExprNode([PrimaryNode(IdentifierToken(-1,-1,"begin")), r_val] + [expr for expr in exprs])
+        func = ExprNode([PrimaryNode(IdentifierToken(-1,-1,"lambda")), param_list, body])
+        sf_define(rt, identifier, func)
+    elif isinstance(l_val, PrimaryNode) and isinstance(l_val.token, IdentifierToken):
         rt.globals[l_val.token.value] = rt.eval(r_val)
     else:
         raise SyntaxError("There is invalid identity name after define special form.")

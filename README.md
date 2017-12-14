@@ -9,7 +9,8 @@ Implementation of Scheme interpreter in Python
   (display arg1)
   (+ arg1 arg2))
 ```
-2. 支持Symbol类型，可通过`'()`构造list。
+2. 支持Symbol类型，可通过`'()`构造list
+3. 支持`(load 'scm.core)`和环境变量`PATH`来加载模块
 
 ### `v0.2.0`
 1. 引入独立于Python的类型系统。

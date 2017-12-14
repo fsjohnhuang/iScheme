@@ -57,6 +57,25 @@ def gt(a, b):
 def lt(a, b):
     return a < b
 
+empty_list = []
+def expr_list(*xs):
+    if len(xs):
+        return [x for x in xs]
+    else:
+        return empty_list
+
+def eq_question_mark(a, b):
+    return a is b
+
+def car(lst):
+    return lst[0] if len(lst) else empty_list
+
+def cdr(lst):
+    return lst[1:] if len(lst) > 1 else empty_list
+
+def cons(a, xs):
+    return [a] + xs
+
 exports = {"display": display,
            "str": expr_str,
            "+": add,
@@ -66,4 +85,9 @@ exports = {"display": display,
            "%": mod,
            "**": pow,
            "<": lt,
-           ">": gt}
+           ">": gt,
+           "list": expr_list,
+           "car": car,
+           "cdr": cdr,
+           "eq?": eq_question_mark,
+           "cons": cons}

@@ -45,7 +45,7 @@
   (if (> a b) b a))
 
 (define (count xs)
-  (if (eq? (list) xs)
+  (if (eq? '() xs)
     0
     (+ 1 (count (cdr xs)))))
 
@@ -55,13 +55,13 @@
     (reduce f (f accu (car xs)) (cdr xs))))
 
 (define (map f xs)
-  (if (eq? (list) xs)
-    (list)
+  (if (eq? '() xs)
+    '()
     (cons (f (car xs)) (map f (cdr xs)))))
 
 (define (filter f xs)
-  (if (eq? (list) xs)
-    (list)
+  (if (eq? '() xs)
+    '()
     (let ((a (car xs)))
       (if (f a)
         (cons a (filter f (cdr xs)))

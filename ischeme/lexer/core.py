@@ -3,7 +3,7 @@
 from token import *
 
 class Lexer(object):
-    token_types = [FloatToken, IntToken, BoolToken, CharToken, StringToken, SymbolToken, IdentifierToken, LeftBraceToken, RightBraceToken, DottedPairToken, SingleCommentToken]
+    token_types = [FloatToken, IntToken, BoolToken, CharToken, StringToken, SymbolToken, ListLiteralToken, IdentifierToken, LeftBraceToken, RightBraceToken, DottedPairToken, SingleCommentToken]
 
     def __init__(self, lines):
         super(Lexer, self).__init__()

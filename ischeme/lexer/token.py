@@ -94,6 +94,33 @@ class SymbolToken(Token):
     def __init__(self, linenu, colnu, value):
         super(SymbolToken, self).__init__(linenu, colnu, value)
 
+class ListLiteralToken(Token):
+    pattern = re.compile(r"\s*('\()")
+
+    @classmethod
+    def match(cls, linenu, pos, line):
+        m = cls.pattern.match(line, pos)
+        if m:
+            token = ["'("]
+            l_brace_count = 1
+            start_pos = m.start(1)
+            pos = m.end() - 1
+            while l_brace_count > 0:
+                pos += 1
+                if pos == len(line):
+                    raise SyntaxError("'( is lack of ).")
+                m = line[++pos]
+                if m == "(":
+                    l_brace_count += 1
+                elif m == ")":
+                    l_brace_count -= 1
+                token.append(m)
+
+            return (cls(linenu, start_pos, "".join(token)), pos + 1)
+
+    def __init__(self, linenu, colnu, value):
+        super(ListLiteralToken, self).__init__(linenu, colnu, value)
+
 class IdentifierToken(Token):
     pattern = re.compile(r"\s*([a-zA-Z~!?@#$%^&*\-+=_./\<>][a-zA-Z~!?@#$%^&*\-+=_./\<>0-9]*)(?:\s+|\)|$)")
 

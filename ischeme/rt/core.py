@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from ..parser.node import *
+from ..parser.core import Parser
 from ..lexer.token import *
+from ..lexer.core import Lexer
 import special_forms, nlib
 
 class RT(object):
@@ -14,7 +16,7 @@ class RT(object):
         for kvs in special_forms.alias.items():
             self.special_forms[kvs[0]] = kvs[1]
 
-        self.globals = {}
+        self.globals = {"'()": []}
         exports = nlib.exports
         for kv in exports.items():
             self.globals[kv[0]] = kv[1]
@@ -43,8 +45,11 @@ class RT(object):
             return self.eval_primary(node)
 
     def eval_program(self, node):
+        ret = None
         for child in node.children:
-            self.eval(child)
+            ret = self.eval(child)
+
+        return ret
 
     def eval_expr(self, node):
         identifier = node.children[0].token
@@ -75,6 +80,12 @@ class RT(object):
             return self.resolve(token)
         elif type_of_token == SymbolToken:
             return token.value.replace("'","")
+        elif type_of_token == ListLiteralToken:
+            if not self.globals.has_key(token.value):
+                xs = map(lambda x: x if x != "(" else "(list ", token.value[1:])
+                code = "".join(xs)
+                self.globals[token.value] = self.eval(Parser(Lexer(["(load \"/home/john/iScheme/ischeme/rt/scm/core.scm\")", code])).parse())
+            return self.globals[token.value]
 
     def eval_lambda(self, node, args):
         lexical_scope = node.lexical_scope

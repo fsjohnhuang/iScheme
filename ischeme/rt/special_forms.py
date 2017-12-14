@@ -106,6 +106,20 @@ def sf_let_asterisk(rt, local_vars, expr, *exprs):
     finally:
         rt.locals.pop(-1)
 
+def sf_list(rt, *xs):
+    if len(xs):
+        return [rt.eval(x) for x in xs]
+    else:
+        return rt.globals["'()"]
+
+def sf_car(rt, lst):
+    lst = rt.eval(lst)
+    return lst[0] if len(lst) else rt.globals["'()"]
+
+def sf_cdr(rt, lst):
+    lst = rt.eval(lst)
+    return lst[1:] if len(lst) > 1 else rt.globals["'()"]
+
 def sf_lambda(rt, param_list, expr):
     params = map(lambda child: child.token.value, param_list.children)
     id_nodes = __find_refs(expr, params)

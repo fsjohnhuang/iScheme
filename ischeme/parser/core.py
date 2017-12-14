@@ -6,7 +6,7 @@ from node import *
 # 将(E)BNF写成的规则转换为语法分析程序
 
 # EBNF
-# primary : INT | FLOAT | STRING | BOOL | CHAR | SYMBOL | IDENTIFIER | expr
+# primary : INT | FLOAT | STRING | BOOL | CHAR | SYMBOL | IDENTIFIER | LIST_LITERAL | expr
 # expr    : "(" { primary } ")"
 # program : { expr }
 
@@ -25,7 +25,7 @@ class Parser(object):
 
         token = self.lexer.peek()
         type_of_token = type(token)
-        if type_of_token in [IntToken,FloatToken,StringToken,BoolToken,CharToken,SymbolToken,IdentifierToken]:
+        if type_of_token in [ListLiteralToken,IntToken,FloatToken,StringToken,BoolToken,CharToken,SymbolToken,IdentifierToken]:
             return PrimaryNode(self.lexer.read())
         elif type_of_token == LeftBraceToken:
             return self.expr()

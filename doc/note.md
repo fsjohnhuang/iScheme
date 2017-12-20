@@ -14,3 +14,12 @@ id(b)  #=> 123
 a is b #=> True
 ```
 `==`，判断两个变量指向的对象是否结构相同且结构中的内容相同。
+
+## Scheme中的let,let\*实现
+let和let\*实际上是通过lambda来实现
+```
+(define-syntax let
+  (syntax-rules ()
+    ((let ((var expr) ...) body ...)
+      ((lambda (var ...) body ...) expr ...))))
+```

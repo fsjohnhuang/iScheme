@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import os
 from ..parser.node import *
 from ..parser.core import Parser
 from ..lexer.token import *
@@ -9,6 +10,8 @@ import special_forms, nlib
 class RT(object):
     def __init__(self):
         super(RT, self).__init__()
+        self.path = os.getcwd()
+
         self.special_forms = {}
         for name in dir(special_forms):
             if name.startswith("sf_"):

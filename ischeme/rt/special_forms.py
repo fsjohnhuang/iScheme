@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import os
 from ..lexer.token import *
 from ..parser.node import *
 from ..lexer.core import Lexer
@@ -7,7 +8,13 @@ from ..parser.core import Parser
 import core
 
 def sf_load(rt, expr):
-    with open(rt.eval(expr)) as f:
+    #"/home/test.scm"
+    #'test
+    filepath = rt.eval(expr)
+    if not filepath.endswith(".scm"):
+        filepath = filepath.replace(".", "/")
+        filepath = os.path.join(rt.path, filepath+".scm")
+    with open(filepath) as f:
         src = [line.strip("\n") for line in f.readlines()]
     lexer = Lexer(src)
     parser = Parser(lexer)
@@ -142,5 +149,11 @@ def __find_refs(expr, excludes):
         return [expr]
     else:
         return []
+
+def sf_doto(rt, expr, *exprs):
+    for _expr in exprs:
+        _expr.children.insert(1, expr)
+        expr = _expr
+    return rt.eval(expr)
 
 alias = {"let*": sf_let_asterisk}

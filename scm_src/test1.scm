@@ -11,3 +11,8 @@
   (str x "1"))
 
 (display (map mapper a))
+
+(doto
+  (+ 1 2)
+  (+ 3)
+  (display))

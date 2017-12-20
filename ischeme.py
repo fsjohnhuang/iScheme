@@ -9,7 +9,7 @@ def main(file_path):
     with open(file_path) as f:
         src = [line.strip("\n") for line in f.readlines()]
     # prepend (load 'scm.core)
-    src.insert(0, "(load \"/home/john/iScheme/ischeme/rt/scm/core.scm\")")
+    src.insert(0, "(load 'ischeme.rt.scm.core)")
 
     lexer = Lexer(src)
     parser = Parser(lexer)
